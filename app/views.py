@@ -23,7 +23,7 @@ import traceback
 import logging
 
 from google.cloud import datastore
-
+from latex2sympy2 import latex2sympy
 
 datastore_client = models.datastore_client
 
@@ -71,6 +71,7 @@ def index(request):
 
 
 def input_exists(input):
+    print("input_exists: %s" % (input))
     logging.info(f'Checking if input exists...: {input}')
     query = datastore_client.query(kind='Query')
     query = query.add_filter('text', '=', input)
@@ -89,6 +90,9 @@ def input(request):
 
             if input.strip().lower() in ('random', 'example', 'random example'):
                 return redirect('/random')
+
+            if "\\" in input: 
+                input = str(latex2sympy(input))
 
             g = SymPyGamma()
             r = g.eval(input)

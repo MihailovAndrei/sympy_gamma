@@ -5,7 +5,8 @@ RUN apt-get update \
   && apt-get install -y build-essential \
   && apt-get install -y python-dev \
   && apt-get install -y wget \
-  && apt-get install -y zip unzip
+  && apt-get install -y zip unzip \
+  && apt-get install -y mc
 
 WORKDIR /usr/src/app
 
@@ -28,7 +29,7 @@ RUN ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin/phantomjs
 RUN ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/bin/phantomjs
 RUN rm -rf /usr/local/share/$PHANTOM_JS.tar.bz2
 
-RUN cd ../ && git clone git://github.com/casperjs/casperjs.git \
+RUN cd ../ && git clone https://github.com/casperjs/casperjs.git \
     && cd casperjs && ln -sf `pwd`/bin/casperjs /usr/local/bin/casperjs
 
 ENV PYTHONPATH="/usr/src/app"
